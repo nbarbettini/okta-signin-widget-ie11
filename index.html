@@ -16,11 +16,7 @@
 	var baseUrl = 'https://{yourOktaDomain}.com';
 
 	var oktaSignIn = new OktaSignIn({
-		baseUrl: baseUrl,
-		clientId: '{yourClientId}',
-		authParams: {
-				responseType: 'id_token'
-		}
+		baseUrl: baseUrl
 	});
 </script>
 
@@ -34,10 +30,8 @@
 				el: '#okta-login-container'
 			},
 			function (res) {
-				console.log('success!');
-				// Redirect to end-user chiclet page
-				window.location.href = baseUrl;
-			},
+        if (res.status === 'SUCCESS') { res.session.setCookieAndRedirect(baseUrl); }
+      },
 			function (err) {
 				console.log(err);
 			});
